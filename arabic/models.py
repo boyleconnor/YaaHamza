@@ -98,7 +98,6 @@ class Word(Entry, PropertyHolder):
             return potential[0]
         else:
             return potential.join(' / ')
-        #blank comment
 
 
 class Inflection(Entry, PropertyHolder):
