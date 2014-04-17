@@ -84,6 +84,8 @@ YAA = 'ي'
 
 HAMZA = 'ء'
 
+#random comment
+
 ALIF_MAQSURA = 'ى'
 
 VOWELS = ALIF + WAW + YAA + ALIF_MAQSURA
