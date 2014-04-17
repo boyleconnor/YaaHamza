@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Results for {{ q }}{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Word</th>
+        <th>Part of Speech</th>
+        <th>Definition</th>
+    </tr>
+    {% for result in results %}
+    <tr>
+        <td>
+            <a href="{% url "word" result.pk %}">{{ result }}</a>
+        </td>
+        <td>
+            {{ result.pos|default:"root"|capfirst }}
+        </td>
+        <td>
+            {{ result.definition|capfirst }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

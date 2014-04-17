@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ q }}{% endblock %}
+
+{% block content %}
+    <h1>{{ root }}</h1>
+    <h3>{{ root.definition|capfirst }}</h3>
+    <table>
+        <tr>
+            <th>
+                Derivative
+            </th>
+            <th>
+                Part of Speech
+            </th>
+            <th>
+                Definition
+            </th>
+        </tr>
+        {% for derivative in root.derivatives.all %}
+        <tr>
+            <td>
+                <a href="{% url "word" derivative.pk %}">{{ derivative }}</a>
+            </td>
+            <td>
+                {{ derivative.pos|capfirst }}
+            </td>
+            <td>
+                {{ derivative.definition|capfirst }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
