@@ -93,11 +93,14 @@ class Word(Entry, PropertyHolder):
         """
         Returns a string of all inflections matching the keywords, separated by a '/' where necessary
         """
-        potential = [i.spelling for i in self.inflections.filter(**kwargs)]
+        potential = self.inflections.all()
+        for (key, value) in kwargs.items():
+            potential = potential.filter(properties__regex=('%s:%s' % (key, value)))
+        potential = [i.spelling for i in potential]
         if len(potential) > 1:
             return potential[0]
         else:
-            return potential.join(' / ')
+            return ' / '.join(potential)
 
 
 class Inflection(Entry, PropertyHolder):
@@ -145,5 +148,13 @@ class Inflecter(Pattern, PropertyHolder):
     """
 
     def apply(self, origin):
+        """
+        Creates (and saves to DB) <Word> model with:
+            <spelling> - determined by <self.match> and <self.template> regex patterns
+            <definition> - determined by <self.properties>
+            <properties> - <self.properties>
+            <inflecter> - <self>
+            <stem> - <origin>
+        """
         return Inflection.objects.create(spelling=self.spell(origin), properties=self.properties, inflecter=self,
                                          stem=origin)

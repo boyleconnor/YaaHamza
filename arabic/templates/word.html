@@ -4,62 +4,8 @@
 
 {% block content %}
     <h1>{{ word }}</h1>
-    <table>
-        <tr>
-            <td>
-                Part of Speech
-            </td>
-            <td>
-                {{ word.pos|capfirst }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Definition
-            </td>
-            <td>
-                {{ word.definition|capfirst }}
-            </td>
-        </tr>
-        {% if word.deriver %}
-        <tr>
-            <td>
-                Pattern
-            </td>
-            <td>
-                {{ word.deriver }}
-            </td>
-        </tr>
-        {% endif %}
-        {% if word.stem %}
-        <tr>
-            <td>
-                Stem
-            </td>
-            <td>
-                {{ word.stem }}
-            </td>
-        </tr>
-        {% endif %}
-        {% if word.root %}
-        <tr>
-            <td>
-                Root
-            </td>
-            <td>
-                <a href="{% url "root" word.root.pk %}">{{ word.root }}</a>
-            </td>
-        </tr>
-        {% endif %}
-        {% for key, value in word.get_properties.items %}
-        <tr>
-            <td>
-                {{ key|capfirst }}
-            </td>
-            <td>
-                {{ value|capfirst }}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% include "word_info_table.html" with word=word %}
+    {% if word.pos == "verb" %}<h3>Conjugations</h3> {% include "verb_inflection_table.html" with verb=word %}{% endif %}
+    {% if word.pos == "noun" %}<h3>Declensions</h3>{% include "noun_inflection_table.html" with noun=word %}{% endif %}
+    {% if word.pos == "adjective" %}<h3>Declensions</h3>{% include "adjective_inflection_table.html" with adjective=word %}{% endif %}
 {% endblock %}

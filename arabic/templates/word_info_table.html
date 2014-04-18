@@ -1,0 +1,58 @@
+<table>
+    <tr>
+        <td>
+            Part of Speech
+        </td>
+        <td>
+            {{ word.pos|capfirst }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Definition
+        </td>
+        <td>
+            {{ word.definition|capfirst }}
+        </td>
+    </tr>
+    {% if word.deriver %}
+    <tr>
+        <td>
+            Pattern
+        </td>
+        <td>
+            {{ word.deriver }}
+        </td>
+    </tr>
+    {% endif %}
+    {% if word.stem %}
+    <tr>
+        <td>
+            Stem
+        </td>
+        <td>
+            {{ word.stem }}
+        </td>
+    </tr>
+    {% endif %}
+    {% if word.root %}
+    <tr>
+        <td>
+            Root
+        </td>
+        <td>
+            <a href="{% url "root" word.root.pk %}">{{ word.root }}</a>
+        </td>
+    </tr>
+    {% endif %}
+    {% for key, value in word.get_properties.items %}
+    <tr>
+        <td>
+            {{ key|capfirst }}
+        </td>
+        <td>
+            {{ value|capfirst }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
