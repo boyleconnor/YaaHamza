@@ -1,4 +1,3 @@
-import json
 import re
 from django.db.models import Model, TextField, ForeignKey
 

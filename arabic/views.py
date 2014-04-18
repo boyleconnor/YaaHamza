@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from arabic.models import Word, Root
 from django.db.models import ObjectDoesNotExist
-from arabic.constants import ROOT_LENGTHS, ABJAD, TASHKEEL
+from arabic.utils import ROOT_LENGTHS, ABJAD, TASHKEEL
 
 
 def home(request):

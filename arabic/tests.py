@@ -1,5 +1,5 @@
 from django.test import TestCase
-from arabic.constants import ABJAD, SHADDA, FATHA
+from arabic.utils import ABJAD, SHADDA, FATHA
 from arabic.models import *
 
 

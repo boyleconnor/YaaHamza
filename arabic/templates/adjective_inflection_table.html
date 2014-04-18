@@ -1,9 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+{% load inflections %}
+<table>
+    <tr id="count">
+        <td colspan="2">Singular</td>
+        <td colspan="2">Dual</td>
+        <td colspan="2">Plural</td>
+    </tr>
+    <tr id="gender">
+        <td>M</td>
+        <td>F</td>
+        <td>M</td>
+        <td>F</td>
+        <td>M</td>
+        <td>F</td>
+    </tr>
+    <tr id="nominative">
+        <td>{% get_inflections adjective  %}</td>
+    </tr>
+</table>
