@@ -1,1 +1,27 @@
-<table></table>
+{% load inflections %}
+<table>
+    <tr>
+        <th></th>
+        <th>Singular</th>
+        <th>Dual</th>
+        <th>Plural</th>
+    </tr>
+    <tr>
+        <th>Nominative</th>
+        <td>{% get_inflections noun state=state case="nominative" count="singular" %}</td>
+        <td>{% get_inflections noun state=state case="nominative" count="dual" %}</td>
+        <td>{% get_inflections noun state=state case="nominative" count="plural" %}</td>
+    </tr>
+    <tr>
+        <th>Genitive</th>
+        <td>{% get_inflections noun state=state case="genitive" count="singular" %}</td>
+        <td>{% get_inflections noun state=state case="genitive" count="dual" %}</td>
+        <td>{% get_inflections noun state=state case="genitive" count="plural" %}</td>
+    </tr>
+    <tr>
+        <th>Accusative</th>
+        <td>{% get_inflections noun state=state case="accusative" count="singular" %}</td>
+        <td>{% get_inflections noun state=state case="accusative" count="dual" %}</td>
+        <td>{% get_inflections noun state=state case="accusative" count="plural" %}</td>
+    </tr>
+</table>
