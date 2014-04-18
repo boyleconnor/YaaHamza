@@ -16,26 +16,26 @@
     </tr>
     <tr>
         <th>Singular</th>
-        <td colspan="2">{% get_inflections verb person="first" count="singular" %}</td>
-        <td>{% get_inflections verb person="second" gender="masculine" count="singular" %}</td>
-        <td>{% get_inflections verb person="second" gender="feminine" count="singular" %}</td>
-        <td>{% get_inflections verb person="third" gender="masculine" count="singular" %}</td>
-        <td>{% get_inflections verb person="third" gender="masculine" count="singular" %}</td>
+        <td colspan="2">{% get_inflections verb mood=mood tense=tense person="first" count="singular" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="masculine" count="singular" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="feminine" count="singular" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="masculine" count="singular" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="masculine" count="singular" %}</td>
     </tr>
     <tr>
         <th>Dual</th>
         <td colspan="2"></td>
-        <td>{% get_inflections verb person="second" gender="masculine" count="dual" %}</td>
-        <td>{% get_inflections verb person="second" gender="feminine" count="dual" %}</td>
-        <td>{% get_inflections verb person="third" gender="masculine" count="dual" %}</td>
-        <td>{% get_inflections verb person="third" gender="feminine" count="dual" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="masculine" count="dual" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="feminine" count="dual" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="masculine" count="dual" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="feminine" count="dual" %}</td>
     </tr>
     <tr>
         <th>Plural</th>
-        <td colspan="2">{% get_inflections verb person="first" gender="masculine" count="plural" %}</td>
-        <td>{% get_inflections verb person="second" gender="masculine" count="plural" %}</td>
-        <td>{% get_inflections verb person="second" gender="feminine" count="plural" %}</td>
-        <td>{% get_inflections verb person="third" gender="masculine" count="plural" %}</td>
-        <td>{% get_inflections verb person="third" gender="feminine" count="plural" %}</td>
+        <td colspan="2">{% get_inflections verb mood=mood tense=tense person="first" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="second" gender="feminine" count="plural" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections verb mood=mood tense=tense person="third" gender="feminine" count="plural" %}</td>
     </tr>
 </table>
