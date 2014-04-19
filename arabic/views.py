@@ -5,7 +5,7 @@ from arabic.utils import *
 
 
 def home(request):
-    return HttpResponse("Hello, world!")
+    return render(request, 'home.html')
 
 
 def root(request, pk):
