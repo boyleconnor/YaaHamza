@@ -1,9 +1,7 @@
-from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from arabic.models import Word, Root
-from django.db.models import ObjectDoesNotExist
-from arabic.utils import ROOT_LENGTHS, ABJAD, TASHKEEL
+from arabic.utils import *
 
 
 def home(request):
@@ -15,7 +13,7 @@ def root(request, pk):
 
 
 def word(request, pk):
-    return render(request, 'word.html', {'word': Word.objects.get(pk=pk)})
+    return render(request, 'word/word.html', {'word': Word.objects.get(pk=pk)})
 
 
 def search(request, q):
