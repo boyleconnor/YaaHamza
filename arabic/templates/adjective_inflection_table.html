@@ -1,19 +1,45 @@
 {% load inflections %}
 <table>
     <tr id="count">
-        <td colspan="2">Singular</td>
-        <td colspan="2">Dual</td>
-        <td colspan="2">Plural</td>
+        <th></th>
+        <th colspan="2">Singular</th>
+        <th colspan="2">Dual</th>
+        <th colspan="2">Plural</th>
     </tr>
     <tr id="gender">
-        <td>M</td>
-        <td>F</td>
-        <td>M</td>
-        <td>F</td>
-        <td>M</td>
-        <td>F</td>
+        <th></th>
+        <th>M</th>
+        <th>F</th>
+        <th>M</th>
+        <th>F</th>
+        <th>M</th>
+        <th>F</th>
     </tr>
-    <tr id="nominative">
-        <td>{% get_inflections adjective  %}</td>
+    <tr>
+        <th>Nominative</th>
+        <td>{% get_inflections adjective state=state case="nominative" gender="masculine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="nominative" gender="feminine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="nominative" gender="masculine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="nominative" gender="feminine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="nominative" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections adjective state=state case="nominative" gender="feminine" count="plural" %}</td>
+    </tr>
+    <tr>
+        <th>Genitive</th>
+        <td>{% get_inflections adjective state=state case="genitive" gender="masculine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="genitive" gender="feminine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="genitive" gender="masculine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="genitive" gender="feminine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="genitive" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections adjective state=state case="genitive" gender="feminine" count="plural" %}</td>
+    </tr>
+    <tr>
+        <th>Accusative</th>
+        <td>{% get_inflections adjective state=state case="accusative" gender="masculine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="accusative" gender="feminine" count="singular" %}</td>
+        <td>{% get_inflections adjective state=state case="accusative" gender="masculine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="accusative" gender="feminine" count="dual" %}</td>
+        <td>{% get_inflections adjective state=state case="accusative" gender="masculine" count="plural" %}</td>
+        <td>{% get_inflections adjective state=state case="accusative" gender="feminine" count="plural" %}</td>
     </tr>
 </table>
