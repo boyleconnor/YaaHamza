@@ -25,9 +25,9 @@ class Search(ListView):
     page_kwarg = 'page'
 
     def get_queryset(self):
-        if self.request.REQUEST['language'] == 'ar':
+        if self.request.GET['language'] == 'ar':
             return Word.objects.filter(spelling__regex=('^' + ''.join(['(%s[%s]*)' % (i, TASHKEEL) for i in self.request.REQUEST['query']]) + '$'))
-        elif self.request.REQUEST['language'] == 'en':
+        elif self.request.GET['language'] == 'en':
             return Word.objects.filter(definition__contains=self.request.REQUEST['query'])
 
 
