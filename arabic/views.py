@@ -15,8 +15,13 @@ def root(request, pk):
     return render(request, 'root.html', {'root': Root.objects.get(pk=pk)})
 
 
-def word(request, pk):
-    return render(request, 'word/word.html', {'word': Word.objects.get(pk=pk)})
+class Word(DetailView):
+    model = Word
+    template_name = 'word/word.html'
+    context_object_name = 'word'
+
+
+word = Word.as_view()
 
 
 class Search(ListView):
