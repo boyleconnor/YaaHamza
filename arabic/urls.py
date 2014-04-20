@@ -9,7 +9,6 @@ urlpatterns = patterns('arabic.views',
     # url(r'^blog/', include('blog.urls')),
     url(r'root/(?P<pk>\d+)/$', 'root', name='root'),
     url(r'word/(?P<pk>\d+)/$', 'word', name='word'),
-    url(r'search/(?P<q>.*)/$', 'search', name='get_search'),
-    url(r'search/$', 'search', name='post_search'),
+    url(r'search/$', 'search', name='search'),
     url(r'^$', 'home', name='home'),
 )

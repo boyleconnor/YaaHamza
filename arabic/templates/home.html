@@ -2,23 +2,15 @@
 
 {% block title %}Home{% endblock %}
 
-{% block script %}
-<script>
-$(function(){
-    $("#button").click(function(){
-        window.location.href = "{% url "post_search" %}"+$("#search").val();
-    });
-});
-</script>
-{% endblock %}
-
 {% block content %}
 <h1>YaaHamza</h1>
 <p>Welcome to YaaHamza</p>
-<table>
-    <tr>
-        <td><input id="search" type="text"></td>
-        <td><input id="button" type="submit" value="go"></td>
-    </tr>
-</table>
+<form action="{% url "search" %}">
+    <input type="text" name="query">
+    <input type="submit" value="Submit">
+    <select name="language">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+    </select>
+</form>
 {% endblock %}
