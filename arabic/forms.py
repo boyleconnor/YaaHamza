@@ -1,9 +1,20 @@
 from django.forms import ModelForm
+from arabic.models import Root, Inflection, Word
 
 
 class RootForm(ModelForm):
-    pass
+    class Meta:
+        model = Root
+        fields = ['spelling', 'definition']
 
 
 class WordForm(ModelForm):
-    pass
+    class Meta:
+        model = Word
+        fields = ['spelling', 'definition', 'pos', 'properties']
+
+
+class InflectionForm(ModelForm):
+    class Meta:
+        model = Inflection
+        fields = ['spelling', 'properties']
