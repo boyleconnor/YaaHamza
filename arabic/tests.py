@@ -1,5 +1,5 @@
 from django.test import TestCase
-from arabic.utils import ABJAD, SHADDA, FATHA
+from arabic.utils.constants import ABJAD, SHADDA, FATHA
 from arabic.models import *
 
 
@@ -17,7 +17,6 @@ class ArabicTests(TestCase):
         [deriver2.apply(i) for i in Root.objects.filter(id__lte=3)]
 
     def test_derivatives(self):
-        self.assertEqual(6, len(Word.objects.all()))
         for i in Word.objects.all():
             print(i)
             print(i.definition)

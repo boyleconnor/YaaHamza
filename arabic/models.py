@@ -1,5 +1,7 @@
 import re
-from django.db.models import Model, TextField, ForeignKey
+from django.db.models import Model, TextField, ForeignKey, ManyToManyField
+from django.db.models.manager import Manager
+from arabic.utils.utils import search_pattern
 
 
 class PropertyHolder(Model):
@@ -24,7 +26,7 @@ class PropertyHolder(Model):
 
     def set_properties(self, properties):
         """
-        sets properties <str> to given 'properties' <dict>
+        sets properties <str> to given 'properties' <dict> (does NOT call <self.save>)
         """
         self.properties = '/'.join([':'.join(i) for i in properties.items()])
 
@@ -60,7 +62,7 @@ class Pattern(Model):
         """
         return re.compile(self.match).match(origin.spelling).expand(self.template)
 
-    def apply(self):
+    def apply(self, origin):
         pass
 
     def __str__(self):
@@ -76,12 +78,25 @@ class Root(Entry):
     definition = TextField()
 
 
+class WordManager(Manager):
+    def search(self, **kwargs):
+        results = []
+        if not 'language' in kwargs or kwargs['language'] == 'ar':
+            results = self.filter(spelling__regex=search_pattern(kwargs['query']))
+        elif kwargs['language'] == 'en':
+            results = self.filter(definition__contains=kwargs['query'])
+        if 'pos' in kwargs:
+            results = results.filter(pos=kwargs['pos'])
+        return results
+
+
 class Word(Entry, PropertyHolder):
     """
     Model for fully-derived word
 
     Ex: مَطْبَخ, طَاَبِخ
     """
+    objects = WordManager()
     definition = TextField()
     pos = TextField()
     root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
@@ -118,8 +133,12 @@ class Deriver(Pattern, PropertyHolder):
     """
     name = TextField()
     pos = TextField()
+    inflecters = ManyToManyField('Inflecter', related_name='derivers')
 
     def define(self, origin):
+        """
+        Returns basic definition of the product of <self> and <origin>
+        """
         return '(%s of %s)' % (self.name, origin)
 
     def apply(self, origin):

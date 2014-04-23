@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
-from arabic.views import *
 from django.contrib import admin
+from arabic.views import *
+from arabic.ajax import *
 admin.autodiscover()
 
 urlpatterns = patterns('arabic.views',

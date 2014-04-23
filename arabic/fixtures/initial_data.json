@@ -1,81 +1,122 @@
 [
 {
+    "pk": 1, 
     "fields": {
-        "deriver": null,
-        "definition": "to do; to make",
-        "stem": null,
-        "properties": "",
-        "root": null,
-        "pos": "verb",
-        "spelling": "\u0641\u064e\u0639\u064e\u0644\u064e"
-    },
-    "model": "arabic.word",
-    "pk": 1
+        "spelling": "\u0641\u0639\u0644", 
+        "definition": "do; make"
+    }, 
+    "model": "arabic.root"
 },
 {
+    "pk": 1, 
     "fields": {
-        "deriver": null,
-        "definition": "big; great",
-        "stem": null,
-        "properties": "",
-        "root": null,
-        "pos": "adjective",
-        "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631"
-    },
-    "model": "arabic.word",
-    "pk": 2
+        "pos": "verb", 
+        "spelling": "\u0641\u064e\u0639\u064e\u0644\u064e", 
+        "root": 1, 
+        "stem": null, 
+        "definition": "to do; to make", 
+        "deriver": null, 
+        "properties": ""
+    }, 
+    "model": "arabic.word"
 },
 {
+    "pk": 2, 
     "fields": {
-        "deriver": null,
-        "definition": "book",
-        "stem": null,
-        "properties": "gender:masculine",
-        "root": null,
-        "pos": "noun",
-        "spelling": "\u0643\u0650\u062a\u064e\u0627\u064e\u0628"
-    },
-    "model": "arabic.word",
-    "pk": 3
+        "pos": "adjective", 
+        "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631", 
+        "root": null, 
+        "stem": null, 
+        "definition": "big; great", 
+        "deriver": null, 
+        "properties": ""
+    }, 
+    "model": "arabic.word"
 },
 {
+    "pk": 3, 
     "fields": {
-        "stem": 1,
-        "properties": "count:singular/person:first/mood:indicative/tense:imperfect",
-        "spelling": "\u0623\u064e\u0641\u0652\u0639\u064e\u0644\u064f",
-        "inflecter": null
-    },
-    "model": "arabic.inflection",
-    "pk": 1
+        "pos": "noun", 
+        "spelling": "\u0643\u0650\u062a\u064e\u0627\u064e\u0628", 
+        "root": null, 
+        "stem": null, 
+        "definition": "book", 
+        "deriver": null, 
+        "properties": "gender:masculine"
+    }, 
+    "model": "arabic.word"
 },
 {
+    "pk": 4, 
     "fields": {
-        "stem": 1,
-        "properties": "gender:masculine/count:singular/person:second/mood:indicative/tense:imperfect",
-        "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u064f",
-        "inflecter": null
-    },
-    "model": "arabic.inflection",
-    "pk": 2
+        "pos": "verb", 
+        "spelling": "\u0643\u064e\u062a\u064e\u0628\u064e", 
+        "root": null, 
+        "stem": null, 
+        "definition": "to write", 
+        "deriver": null, 
+        "properties": ""
+    }, 
+    "model": "arabic.word"
 },
 {
+    "pk": 1, 
     "fields": {
-        "stem": 1,
-        "properties": "gender:feminine/count:singular/person:second/mood:indicative/tense:imperfect",
-        "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u0650\u064a\u0652\u0646\u0651\u064e",
-        "inflecter": null
-    },
-    "model": "arabic.inflection",
-    "pk": 3
+        "stem": 1, 
+        "spelling": "\u0623\u064e\u0641\u0652\u0639\u064e\u0644\u064f", 
+        "inflecter": null, 
+        "properties": "count:singular/person:first/mood:indicative/tense:imperfect"
+    }, 
+    "model": "arabic.inflection"
 },
 {
+    "pk": 2, 
     "fields": {
-        "stem": 3,
-        "properties": "state:construct/case:nominative/count:singular",
-        "spelling": "\u0643\u0650\u062a\u064e\u0627\u064e\u0628\u064f",
-        "inflecter": null
-    },
-    "model": "arabic.inflection",
-    "pk": 4
+        "stem": 1, 
+        "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u064f", 
+        "inflecter": null, 
+        "properties": "gender:masculine/count:singular/person:second/mood:indicative/tense:imperfect"
+    }, 
+    "model": "arabic.inflection"
+},
+{
+    "pk": 3, 
+    "fields": {
+        "stem": 1, 
+        "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u0650\u064a\u0652\u0646\u0651\u064e", 
+        "inflecter": null, 
+        "properties": "gender:feminine/count:singular/person:second/mood:indicative/tense:imperfect"
+    }, 
+    "model": "arabic.inflection"
+},
+{
+    "pk": 4, 
+    "fields": {
+        "stem": 3, 
+        "spelling": "\u0643\u0650\u062a\u064e\u0627\u064e\u0628\u064f", 
+        "inflecter": null, 
+        "properties": "state:construct/case:nominative/count:singular"
+    }, 
+    "model": "arabic.inflection"
+},
+{
+    "pk": 5, 
+    "fields": {
+        "stem": 2, 
+        "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631\u064f", 
+        "inflecter": null, 
+        "properties": "state:construct/gender:masculine/count:singular/case:nominative"
+    }, 
+    "model": "arabic.inflection"
+},
+{
+    "pk": 6, 
+    "fields": {
+        "stem": 2, 
+        "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631\u064e\u0629\u064f", 
+        "inflecter": null, 
+        "properties": "state:construct/gender:feminine/count:singular/case:nominative"
+    }, 
+    "model": "arabic.inflection"
 }
 ]
