@@ -23,9 +23,16 @@
 
 <div class="container">
     <div class="header row text-left">
-        <div class="span4" style="float:left; margin-right: 30px;"> <h1> <a href="#" ><img alt="YaaHamza" src="/static/images/logo-small.png" /> </a> </h1></div>
-        <div class="span7" style="padding-top: 40px;"> <h2> Title </h2> </div>
+        <div class="span4" style="float:left; margin-right: 30px;"> <h1> <a href="{% url "home" %}" ><img alt="YaaHamza" src="/static/images/logo-small.png" /> </a> </h1></div>
     </div>
+    <form action="{% url "search" %}">
+        <input type="text" name="query">
+        <input type="submit" value="Submit">
+        <select name="language">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+        </select>
+    </form>
     {% block content %}{% endblock %}
     <hr>
     <div class="row footer text-center">

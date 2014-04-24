@@ -1,7 +1,5 @@
-from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from arabic.models import Word, Root
-from arabic.utils.utils import search_pattern
 
 
 class Home(TemplateView):
@@ -41,7 +39,7 @@ class Search(ListView):
     template_name = 'search.html'
     context_object_name = 'results'
     page_kwarg = 'page'
-    paginate_by = 2
+    paginate_by = 20
 
     def get_queryset(self):
         return Word.objects.search(**self.request.GET.dict())
