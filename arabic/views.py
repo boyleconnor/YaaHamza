@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from arabic.forms import WordForm
 from arabic.models import Word, Root
 
 
@@ -28,7 +29,7 @@ class WordDetail(DetailView):
 
 class WordCreate(CreateView):
     #TODO: implement
-    model = Word
+    form_class = WordForm
     template_name = 'word/word_create.html'
 
 

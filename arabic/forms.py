@@ -1,4 +1,3 @@
-from django.db.models.fields import CharField
 from django.forms import ModelForm
 from arabic.models import Root, Inflection, Word
 

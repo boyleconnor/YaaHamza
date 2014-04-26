@@ -15,7 +15,7 @@
         "root": 1, 
         "stem": null, 
         "definition": "to do; to make", 
-        "deriver": null, 
+        "pattern": null, 
         "properties": ""
     }, 
     "model": "arabic.word"
@@ -28,7 +28,7 @@
         "root": null, 
         "stem": null, 
         "definition": "big; great", 
-        "deriver": null, 
+        "pattern": null, 
         "properties": ""
     }, 
     "model": "arabic.word"
@@ -41,7 +41,7 @@
         "root": null, 
         "stem": null, 
         "definition": "book", 
-        "deriver": null, 
+        "pattern": null, 
         "properties": "gender:masculine"
     }, 
     "model": "arabic.word"
@@ -54,7 +54,7 @@
         "root": null, 
         "stem": null, 
         "definition": "to write", 
-        "deriver": null, 
+        "pattern": null, 
         "properties": ""
     }, 
     "model": "arabic.word"
@@ -64,7 +64,7 @@
     "fields": {
         "stem": 1, 
         "spelling": "\u0623\u064e\u0641\u0652\u0639\u064e\u0644\u064f", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "count:singular/person:first/mood:indicative/tense:imperfect"
     }, 
     "model": "arabic.inflection"
@@ -74,7 +74,7 @@
     "fields": {
         "stem": 1, 
         "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u064f", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "gender:masculine/count:singular/person:second/mood:indicative/tense:imperfect"
     }, 
     "model": "arabic.inflection"
@@ -84,7 +84,7 @@
     "fields": {
         "stem": 1, 
         "spelling": "\u062a\u064e\u0641\u0652\u0639\u064e\u0644\u0650\u064a\u0652\u0646\u0651\u064e", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "gender:feminine/count:singular/person:second/mood:indicative/tense:imperfect"
     }, 
     "model": "arabic.inflection"
@@ -94,7 +94,7 @@
     "fields": {
         "stem": 3, 
         "spelling": "\u0643\u0650\u062a\u064e\u0627\u064e\u0628\u064f", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "state:construct/case:nominative/count:singular"
     }, 
     "model": "arabic.inflection"
@@ -104,7 +104,7 @@
     "fields": {
         "stem": 2, 
         "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631\u064f", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "state:construct/gender:masculine/count:singular/case:nominative"
     }, 
     "model": "arabic.inflection"
@@ -114,7 +114,7 @@
     "fields": {
         "stem": 2, 
         "spelling": "\u0643\u064e\u0628\u0650\u064a\u0652\u0631\u064e\u0629\u064f", 
-        "inflecter": null, 
+        "pattern": null, 
         "properties": "state:construct/gender:feminine/count:singular/case:nominative"
     }, 
     "model": "arabic.inflection"

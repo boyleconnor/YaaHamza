@@ -4,7 +4,7 @@ from django.db.models.manager import Manager
 from arabic.utils.utils import search_pattern
 
 
-class PropertyHolder(Model):
+class PropertyHolderMixIn(Model):
     """
     Abstract Model for models that have 'properties' <str>'s
     does NOT call self.save() when set_properties() is called
@@ -90,7 +90,7 @@ class WordManager(Manager):
         return results
 
 
-class Word(Entry, PropertyHolder):
+class Word(Entry, PropertyHolderMixIn):
     """
     Model for fully-derived word
 
@@ -101,7 +101,7 @@ class Word(Entry, PropertyHolder):
     pos = TextField()
     root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
     stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
-    deriver = ForeignKey('Deriver', blank=True, null=True, related_name='words')
+    pattern = ForeignKey('Deriver', blank=True, null=True, related_name='words')
 
     def get_inflections(self, **kwargs):
         """
@@ -111,23 +111,23 @@ class Word(Entry, PropertyHolder):
         for (key, value) in kwargs.items():
             potential = potential.filter(properties__regex=('%s:%s' % (key, value)))
         potential = [i.spelling for i in potential]
-        if len(potential) > 1:
+        if len(potential) > 1: #TODO: change to == 1
             return potential[0]
-        else:
+        else: #TODO: change to elif len(potential) to elif len(potential) > 1
             return ' / '.join(potential)
 
 
-class Inflection(Entry, PropertyHolder):
+class Inflection(Entry, PropertyHolderMixIn):
     """
     Model for fully-inflected word
 
     Ex: كِتَاَبُ, كُتُبْ
     """
     stem = ForeignKey(Word, related_name='inflections')
-    inflecter = ForeignKey('Inflecter', blank=True, null=True, related_name='inflections')
+    pattern = ForeignKey('Inflecter', blank=True, null=True, related_name='inflections')
 
 
-class Deriver(Pattern, PropertyHolder):
+class Deriver(Pattern, PropertyHolderMixIn):
     """
     Model for <Derivation> pattern
     """
@@ -144,14 +144,14 @@ class Deriver(Pattern, PropertyHolder):
     def apply(self, origin):
         """
         Creates (and saves to DB) <Word> model with:
-            <spelling> - determined by <self.match> and <self.template> regex patterns
-            <definition> - determined by <self.name> and <origin.spelling>
+            <spelling> - determined by <self.match> and <self.template> regex patterns using <self.spell()>
+            <definition> - determined by <self.name> and <origin.spelling> using <self.define()>
             <pos> - <self.pos>
-            <deriver> - <self>
+            <pattern> - <self>
             <stem> - <origin> (if <origin> is a <Word>)
             <root> - <origin> (if <origin> is a <Root>)
         """
-        return Word.objects.create(spelling=self.spell(origin), definition=self.define(origin), deriver=self,
+        return Word.objects.create(spelling=self.spell(origin), definition=self.define(origin), pattern=self,
                                    properties=self.properties, pos=self.pos,
                                    root=(origin if type(origin) == Root else origin.root),
                                    stem=(origin if type(origin) == Word else None))
@@ -160,7 +160,7 @@ class Deriver(Pattern, PropertyHolder):
         return self.name
 
 
-class Inflecter(Pattern, PropertyHolder):
+class Inflecter(Pattern, PropertyHolderMixIn):
     """
     Model for <Inflection> pattern
     """
@@ -171,8 +171,8 @@ class Inflecter(Pattern, PropertyHolder):
             <spelling> - determined by <self.match> and <self.template> regex patterns
             <definition> - determined by <self.properties>
             <properties> - <self.properties>
-            <inflecter> - <self>
+            <pattern> - <self>
             <stem> - <origin>
         """
-        return Inflection.objects.create(spelling=self.spell(origin), properties=self.properties, inflecter=self,
+        return Inflection.objects.create(spelling=self.spell(origin), properties=self.properties, pattern=self,
                                          stem=origin)
