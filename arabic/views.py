@@ -23,14 +23,13 @@ class WordDetail(DetailView):
     Detail view for Word
     """
     model = Word
-    template_name = 'word/word_detail.html'
+    template_name = 'word/detail.html'
     context_object_name = 'word'
 
 
 class WordCreate(CreateView):
-    #TODO: implement
-    form_class = WordForm
-    template_name = 'word/word_create.html'
+    fields = ['spelling', 'definition', 'pos', 'properties']
+    template_name = 'word/create.html'
 
 
 class Search(ListView):
