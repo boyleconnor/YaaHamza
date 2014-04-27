@@ -111,9 +111,9 @@ class Word(Entry, PropertyHolderMixIn):
         for (key, value) in kwargs.items():
             potential = potential.filter(properties__regex=('%s:%s' % (key, value)))
         potential = [i.spelling for i in potential]
-        if len(potential) > 1: #TODO: change to == 1
+        if len(potential) == 1:
             return potential[0]
-        else: #TODO: change to elif len(potential) to elif len(potential) > 1
+        elif len(potential) > 1:
             return ' / '.join(potential)
 
 
