@@ -1,21 +1,18 @@
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.db.models.base import get_absolute_url
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.views.generic.edit import UpdateView, DeleteView
 from arabic.forms import WordForm
 from arabic.models import Word, Root
 
 
 class Home(TemplateView):
-    """
-    View for landing page
-    """
     template_name = 'home.html'
 
 
 class RootDetail(DetailView):
-    """
-    Detail view for Root
-    """
     model = Root
-    template_name = 'root.html'
+    template_name = 'root/detail.html'
 
 
 class WordDetail(DetailView):
@@ -28,8 +25,26 @@ class WordDetail(DetailView):
 
 
 class WordCreate(CreateView):
-    fields = ['spelling', 'definition', 'pos', 'properties']
+    form_class = WordForm
     template_name = 'word/create.html'
+
+    def get_success_url(self):
+        return reverse_lazy('word-detail', kwargs={'pk': self.object.id})
+
+
+class WordUpdate(UpdateView):
+    model = Word
+    form_class = WordForm
+    template_name = 'word/update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('word-detail', kwargs={'pk': self.object.id})
+
+
+class WordDelete(DeleteView):
+    model = Word
+    template_name = 'word/delete.html'
+    success_url = reverse_lazy('home')
 
 
 class Search(ListView):

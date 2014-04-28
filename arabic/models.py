@@ -1,4 +1,5 @@
 import re
+from django.core.urlresolvers import reverse
 from django.db.models import Model, TextField, ForeignKey, ManyToManyField
 from django.db.models.manager import Manager
 from arabic.utils.utils import search_pattern
@@ -13,7 +14,7 @@ class PropertyHolderMixIn(Model):
     class Meta:
         abstract = True
 
-    properties = TextField()
+    properties = TextField(blank=True)
 
     def get_properties(self):
         """
@@ -115,6 +116,9 @@ class Word(Entry, PropertyHolderMixIn):
             return potential[0]
         elif len(potential) > 1:
             return ' / '.join(potential)
+
+    def get_absolute_url(self):
+        return reverse('word-detail', kwargs={'pk': self.pk})
 
 
 class Inflection(Entry, PropertyHolderMixIn):

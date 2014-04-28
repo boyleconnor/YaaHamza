@@ -12,7 +12,7 @@
     {% for result in results %}
     <tr>
         <td>
-            <a href="{% url "word" result.pk %}">{{ result }}</a>
+            <a href="{% url "word-detail" result.pk %}">{{ result }}</a>
         </td>
         <td>
             {{ result.pos|default:"root"|capfirst }}

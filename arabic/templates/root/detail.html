@@ -20,7 +20,7 @@
         {% for derivative in root.derivatives.all %}
         <tr>
             <td>
-                <a href="{% url "word" derivative.pk %}">{{ derivative }}</a>
+                <a href="{% url "word-detail" derivative.pk %}">{{ derivative }}</a>
             </td>
             <td>
                 {{ derivative.pos|capfirst }}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Creating Word{% endblock %}
+{% block title %}Deleting{{ word }}{% endblock %}
 
 {% block content %}
+<h1>Are you sure you want to delete {{ word }}?</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
     <input type="submit" value="Submit">
 </form>
 {% endblock %}
