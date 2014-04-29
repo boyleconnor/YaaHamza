@@ -8,5 +8,5 @@
     {% if word.pos == "verb" %}<h3>Conjugations</h3> {% include "word/inflection_tables/verb_inflection_table.html" with verb=word mood="indicative" tense="imperfect" %}{% endif %}
     {% if word.pos == "noun" %}<h3>Declensions</h3>{% include "word/inflection_tables/noun_inflection_table.html" with noun=word state="construct" %}{% endif %}
     {% if word.pos == "adjective" %}<h3>Declensions</h3>{% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}{% endif %}
-    <a href="{% url "" %}">Edit</a>
+    <a href="{% url "word-update" pk=word.pk %}">Edit</a>
 {% endblock %}
