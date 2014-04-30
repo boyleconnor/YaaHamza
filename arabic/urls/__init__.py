@@ -6,6 +6,6 @@ admin.autodiscover()
 urlpatterns = patterns('arabic.views',
     url(r'^root/', include('arabic.urls.root')),
     url(r'^word/', include('arabic.urls.word')),
-    url(r'^search/$', Search.as_view(), name='search'),
+    url(r'^search/$', WordSearch.as_view(), name='search'),
     url(r'^$', Home.as_view(), name='home'),
 )

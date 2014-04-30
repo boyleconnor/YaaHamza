@@ -1,9 +1,24 @@
+from django.db.models.query import QuerySet
 from django.forms import model_to_dict
 from django.views.generic import View
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.list import MultipleObjectMixin
 import json
 from django.http import HttpResponse
+
+
+def ajax_hook(old):
+    def new(*args, **kwargs):
+        return HttpResponse(json.dumps(make_jsonable(old(*args, **kwargs))))
+    return new
+
+
+def make_jsonable(data):
+    if type(data) in (QuerySet, list, tuple):
+        return [make_jsonable(i) for i in data]
+    if hasattr(data, 'jsonable'):
+        return data.jsonable()
+    return model_to_dict(data)
 
 
 class JsonResponseMixin:
@@ -34,7 +49,7 @@ class JsonResponseMixin:
         Converts a model instance to JSON
         :rtype : str
         """
-        if hasattr(instance, 'jsonable'):
+        if hasattr(instance, 'make_jsonable'):
             return json.dumps(instance.jsonable())
         else:
             return json.dumps(model_to_dict(instance))

@@ -1,19 +1,33 @@
-from arabic.models import Word, Root
+from django.shortcuts import get_object_or_404, get_list_or_404
+from arabic.models import Word, Root, Inflection
 from arabic.utils.ajax import ajax_hook
 
 
 @ajax_hook
-def word_detail(request):
-    word = Word.objects.get(pk=request.POST['pk'])
-    return word.__dict__
-
-
-@ajax_hook
 def root_detail(request):
-    root = Root.objects.get(pk=request.POST['pk'])
-    return root.__dict__
+    return get_object_or_404(Root, **request.GET.dict())
 
 
 @ajax_hook
-def search(request):
-    return [Word.objects.search(**request.POST)]
+def root_list(request):
+    return get_list_or_404(Root, **request.GET.dict())
+
+
+@ajax_hook
+def word_detail(request):
+    return get_list_or_404(Word, **request.GET.dict())
+
+
+@ajax_hook
+def word_list(request):
+    return get_list_or_404(Word, **request.GET.dict())
+
+
+@ajax_hook
+def inflection_detail(request):
+    return get_object_or_404(Inflection, **request.GET.dict())
+
+
+@ajax_hook
+def inflection_list(request):
+    return get_list_or_404(Inflection, **request.GET.dict())

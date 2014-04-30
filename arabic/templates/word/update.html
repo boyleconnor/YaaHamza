@@ -3,11 +3,11 @@
 {% block title %}Editing {{ word }}{% endblock %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit">
-</form>
-<a href="{% url "word-delete" pk=word.pk %}">Delete</a>
-<a href="{% url "word-detail" pk=word.pk %}">Cancel</a>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    <a href="{% url "word-delete" pk=word.pk %}">Delete</a>
+    <a href="{% url "word-detail" pk=word.pk %}">Cancel</a>
 {% endblock %}

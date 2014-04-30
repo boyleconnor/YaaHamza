@@ -79,25 +79,12 @@ class Root(Entry):
     definition = TextField()
 
 
-class WordManager(Manager):
-    def search(self, **kwargs):
-        results = []
-        if not 'language' in kwargs or kwargs['language'] == 'ar':
-            results = self.filter(spelling__regex=search_pattern(kwargs['query']))
-        elif kwargs['language'] == 'en':
-            results = self.filter(definition__contains=kwargs['query'])
-        if 'pos' in kwargs:
-            results = results.filter(pos=kwargs['pos'])
-        return results
-
-
 class Word(Entry, PropertyHolderMixIn):
     """
     Model for fully-derived word
 
     Ex: مَطْبَخ, طَاَبِخ
     """
-    objects = WordManager()
     definition = TextField()
     pos = TextField()
     root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
