@@ -58,13 +58,13 @@ class JsonResponseMixin:
         return json.dumps([self.instance_to_json(instance) for instance in iterator])
 
 
-class AjaxSingleView(JsonResponseMixin, SingleObjectMixin, View):
+class SingleView(JsonResponseMixin, SingleObjectMixin, View):
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         return self.render_to_response(instance)
 
 
-class AjaxMultipleView(JsonResponseMixin, MultipleObjectMixin, View):
+class MultipleView(JsonResponseMixin, MultipleObjectMixin, View):
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         return self.render_to_response(queryset)

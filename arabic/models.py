@@ -2,34 +2,8 @@ import re
 from django.core.urlresolvers import reverse
 from django.db.models import Model, TextField, ForeignKey, ManyToManyField
 from django.db.models.manager import Manager
+from arabic.utils.fields import PropertiesField
 from arabic.utils.utils import search_pattern
-
-
-class PropertyHolderMixIn(Model):
-    """
-    Abstract Model for models that have 'properties' <str>'s
-    does NOT call self.save() when set_properties() is called
-    """
-
-    class Meta:
-        abstract = True
-
-    properties = TextField(blank=True)
-
-    def get_properties(self):
-        """
-        returns 'properties' TextField in form of python <dict>
-        """
-        if self.properties:
-            return dict([tuple(i.split(':')) for i in self.properties.split('/')])
-        else:
-            return dict()
-
-    def set_properties(self, properties):
-        """
-        sets properties <str> to given 'properties' <dict> (does NOT call <self.save>)
-        """
-        self.properties = '/'.join([':'.join(i) for i in properties.items()])
 
 
 class Entry(Model):
@@ -40,6 +14,7 @@ class Entry(Model):
     class Meta:
         abstract = True
 
+    properties = PropertiesField()
     spelling = TextField()
 
     def __str__(self):
@@ -55,19 +30,20 @@ class Pattern(Model):
         abstract = True
 
     match = TextField()
-    template = TextField()
+    spelling = TextField()
+    properties = PropertiesField()
 
     def spell(self, origin):
         """
         :type self:
         """
-        return re.compile(self.match).match(origin.spelling).expand(self.template)
+        return re.compile(self.match).match(origin.spelling).expand(self.spelling)
 
     def apply(self, origin):
         pass
 
     def __str__(self):
-        return '%s : %s' % (self.match, self.template)
+        return '%s : %s' % (self.match, self.spelling)
 
 
 class Root(Entry):
@@ -79,7 +55,7 @@ class Root(Entry):
     definition = TextField()
 
 
-class Word(Entry, PropertyHolderMixIn):
+class Word(Entry):
     """
     Model for fully-derived word
 
@@ -108,7 +84,7 @@ class Word(Entry, PropertyHolderMixIn):
         return reverse('word-detail', kwargs={'pk': self.pk})
 
 
-class Inflection(Entry, PropertyHolderMixIn):
+class Inflection(Entry):
     """
     Model for fully-inflected word
 
@@ -118,7 +94,7 @@ class Inflection(Entry, PropertyHolderMixIn):
     pattern = ForeignKey('Inflecter', blank=True, null=True, related_name='inflections')
 
 
-class Deriver(Pattern, PropertyHolderMixIn):
+class Deriver(Pattern):
     """
     Model for <Derivation> pattern
     """
@@ -135,7 +111,7 @@ class Deriver(Pattern, PropertyHolderMixIn):
     def apply(self, origin):
         """
         Creates (and saves to DB) <Word> model with:
-            <spelling> - determined by <self.match> and <self.template> regex patterns using <self.spell()>
+            <spelling> - determined by <self.match> and <self.spelling> regex patterns using <self.spell()>
             <definition> - determined by <self.name> and <origin.spelling> using <self.define()>
             <pos> - <self.pos>
             <pattern> - <self>
@@ -151,7 +127,7 @@ class Deriver(Pattern, PropertyHolderMixIn):
         return self.name
 
 
-class Inflecter(Pattern, PropertyHolderMixIn):
+class Inflecter(Pattern):
     """
     Model for <Inflection> pattern
     """
@@ -159,7 +135,7 @@ class Inflecter(Pattern, PropertyHolderMixIn):
     def apply(self, origin):
         """
         Creates (and saves to DB) <Word> model with:
-            <spelling> - determined by <self.match> and <self.template> regex patterns
+            <spelling> - determined by <self.match> and <self.spelling> regex patterns
             <definition> - determined by <self.properties>
             <properties> - <self.properties>
             <pattern> - <self>
