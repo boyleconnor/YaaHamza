@@ -9,14 +9,17 @@ class ArabicTests(TestCase):
             Root.objects.create(spelling=i, definition=j)
         deriver1 = Deriver.objects.create(name='form I (fatHa)', match=('([%s])' % ABJAD) * 3,
                                           spelling=('\\1%s\\2%s\\3%s' % ((FATHA,) * 3)),
-                                          pos='verb', properties={'form': 'I'})
+                                          pos='verb', properties={'form': 'I', 'pos': 'verb'})
         [deriver1.apply(i) for i in Root.objects.filter(id__lte=3)]
         deriver2 = Deriver.objects.create(name='form II', match=('([%s])' % ABJAD) * 3,
                                           spelling=('\\1%s\\2%s%s\\3%s' % (FATHA, FATHA, SHADDA, FATHA)),
-                                          pos='verb', properties={'form': 'I'})
+                                          pos='verb', properties={'form': 'II', 'pos': 'verb'})
         [deriver2.apply(i) for i in Root.objects.filter(id__lte=3)]
 
     def test_derivatives(self):
         for i in Word.objects.all():
             print(i)
+            print(i.properties)
+            print(type(i.properties))
             print(i.definition)
+        print(Word.objects.filter(properties__regex='(?=.*/form:I/)(?=.*/pos:verb/)'))

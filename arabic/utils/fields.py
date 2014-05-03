@@ -1,30 +1,59 @@
-from django.core.exceptions import ValidationError
-from django.db.models.fields import TextField
 from django.db.models.fields.subclassing import SubfieldBase
-from json import dumps, loads
+from django import forms
+from django.core import exceptions
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
-class PropertiesField(TextField, metaclass=SubfieldBase):
-    def __init__(self, *args, **kwargs):
-        if 'possibilities' in kwargs:
-            self.possibilities = kwargs['possibilities']
-        else:
-            self.possibilities = None
-        super().__init__(*args, **kwargs)
+def dumps(value):
+    value = dict(value)
+    return '/'+'/'.join([':'.join(i) for i in value.items()])+'/'
 
-    def get_prep_value(self, value):
-        try:
-            assert type(value) == dict
-        except AssertionError:
-            raise ValidationError("PropertiesField can only contain type 'dict'")
-        return dumps(value)
 
-    def value_to_string(self, obj):
-        return dumps(obj)
+def loads(value):
+    value = value.strip('/')
+    return dict([i.split(':') for i in value.split('/')])
+
+
+class PropertiesField(models.Field, metaclass=SubfieldBase):
+    description = _("Dictionary object")
+
+    def get_internal_type(self):
+        return "TextField"
 
     def to_python(self, value):
-        if not value:
+        if value is None:
+            return None
+        elif value == "":
             return {}
-        if type(value) == dict:  # TODO: Figure out why the hell this could ever be true (it always is).
+        elif isinstance(value, str):
+            try:
+                return dict(loads(value))
+            except (ValueError, TypeError):
+                raise exceptions.ValidationError(self.error_messages['invalid'])
+
+        if isinstance(value, dict):
             return value
-        return loads(value)
+        else:
+            return {}
+
+    def get_prep_value(self, value):
+        if not value:
+            return ""
+        elif isinstance(value, str):
+            return value
+        else:
+            return dumps(value)
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.get_prep_value(value)
+
+    def clean(self, value, model_instance):
+        value = super().clean(value, model_instance)
+        return self.get_prep_value(value)
+
+    def formfield(self, **kwargs):
+        defaults = {'widget': forms.Textarea}
+        defaults.update(kwargs)
+        return super().formfield(**defaults)

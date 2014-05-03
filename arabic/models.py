@@ -34,9 +34,6 @@ class Pattern(Model):
     properties = PropertiesField()
 
     def spell(self, origin):
-        """
-        :type self:
-        """
         return re.compile(self.match).match(origin.spelling).expand(self.spelling)
 
     def apply(self, origin):
