@@ -1,3 +1,4 @@
+from django.core.exceptions import FieldError
 from django.db.models.fields.subclassing import SubfieldBase
 from django import forms
 from django.core import exceptions
@@ -18,24 +19,48 @@ def loads(value):
 class PropertiesField(models.Field, metaclass=SubfieldBase):
     description = _("Dictionary object")
 
-    def get_internal_type(self):
+    def __init__(self, *args, **kwargs):
+        if 'possibilities' in kwargs:
+            self.possibilities = kwargs.pop('possibilities')
+        else:
+            raise FieldError("PropertiesField must be called with parameter 'possibilities'")
+        super().__init__(*args, **kwargs)
+
+    def get_internal_type(self, *args, **kwargs):
         return "TextField"
 
-    def to_python(self, value):
+    def validate(self, value, model_instance):
+        if isinstance(value, dict):
+            for i in value:
+                if i not in self.possibilities:
+                    raise exceptions.ValidationError('%s is not a possible property' % (i,))
+                if value[i] not in self.possibilities[i]:
+                    raise exceptions.ValidationError('%s not in possible %s values' % (value[i], i))
+        elif isinstance(value, str):
+            for i in value.split('/'):
+                prop, val = i.split(':')
+                if prop not in self.possibilities:
+                    raise exceptions.ValidationError()
+                if val not in self.possibilities[prop]:
+                    raise exceptions.ValidationError('%s not in possible %s values' % (val, prop))
+        return super().validate(value, model_instance)
+
+    def to_python(self, value):  # TODO: A bunch of this can be cut out but it is really easy to break
         if value is None:
-            return None
+            result = None
         elif value == "":
-            return {}
+            result = {}
         elif isinstance(value, str):
             try:
-                return dict(loads(value))
+                result = dict(loads(value))
             except (ValueError, TypeError):
                 raise exceptions.ValidationError(self.error_messages['invalid'])
 
         if isinstance(value, dict):
-            return value
+            result = value
         else:
-            return {}
+            result = {}
+        return result
 
     def get_prep_value(self, value):
         if not value:

@@ -1,21 +1,54 @@
 import re
+from arabic.utils.constants import WORD_PROPERTIES, INFLECTION_PROPERTIES
 from django.core.urlresolvers import reverse
 from django.db.models import Model, TextField, ForeignKey, ManyToManyField
-from django.db.models.manager import Manager
 from arabic.utils.fields import PropertiesField
-from arabic.utils.utils import search_pattern
 
 
-class Entry(Model):
+class Root(Model):
     """
-    Abstract Model for entries
+    Word root
+
+    Ex: فعل, كتب, بسمل
     """
-
-    class Meta:
-        abstract = True
-
-    properties = PropertiesField()
     spelling = TextField()
+    definition = TextField()
+
+    def __str__(self):
+        return self.spelling
+
+
+class Word(Model):
+    """
+    Model for fully-derived word
+
+    Ex: مَطْبَخ, طَاَبِخ
+    """
+    spelling = TextField()
+    definition = TextField()
+    pos = TextField()
+    properties = PropertiesField(possibilities=WORD_PROPERTIES)
+    root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
+    stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
+    pattern = ForeignKey('Deriver', blank=True, null=True, related_name='words')
+
+    def get_absolute_url(self):
+        return reverse('word-detail', kwargs={'pk': self.pk})
+
+    def __str__(self):
+        return self.spelling
+
+
+class Inflection(Model):
+    """
+    Model for fully-inflected word
+
+    Ex: كِتَاَبُ, كُتُبْ
+    """
+    spelling = TextField()
+    properties = PropertiesField(possibilities=INFLECTION_PROPERTIES)
+    stem = ForeignKey(Word, related_name='inflections')
+    pattern = ForeignKey('Inflecter', blank=True, null=True, related_name='inflections')
 
     def __str__(self):
         return self.spelling
@@ -31,7 +64,6 @@ class Pattern(Model):
 
     match = TextField()
     spelling = TextField()
-    properties = PropertiesField()
 
     def spell(self, origin):
         return re.compile(self.match).match(origin.spelling).expand(self.spelling)
@@ -43,54 +75,6 @@ class Pattern(Model):
         return '%s : %s' % (self.match, self.spelling)
 
 
-class Root(Entry):
-    """
-    Word root
-
-    Ex: فعل, كتب, بسمل
-    """
-    definition = TextField()
-
-
-class Word(Entry):
-    """
-    Model for fully-derived word
-
-    Ex: مَطْبَخ, طَاَبِخ
-    """
-    definition = TextField()
-    pos = TextField()
-    root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
-    stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
-    pattern = ForeignKey('Deriver', blank=True, null=True, related_name='words')
-
-    def get_inflections(self, **kwargs):
-        """
-        Returns a string of all inflections matching the keywords, separated by a '/' where necessary
-        """
-        potential = self.inflections.all()
-        for (key, value) in kwargs.items():
-            potential = potential.filter(properties__regex=('%s:%s' % (key, value)))
-        potential = [i.spelling for i in potential]
-        if len(potential) == 1:
-            return potential[0]
-        elif len(potential) > 1:
-            return ' / '.join(potential)
-
-    def get_absolute_url(self):
-        return reverse('word-detail', kwargs={'pk': self.pk})
-
-
-class Inflection(Entry):
-    """
-    Model for fully-inflected word
-
-    Ex: كِتَاَبُ, كُتُبْ
-    """
-    stem = ForeignKey(Word, related_name='inflections')
-    pattern = ForeignKey('Inflecter', blank=True, null=True, related_name='inflections')
-
-
 class Deriver(Pattern):
     """
     Model for <Derivation> pattern
@@ -98,6 +82,7 @@ class Deriver(Pattern):
     name = TextField()
     pos = TextField()
     inflecters = ManyToManyField('Inflecter', related_name='derivers')
+    properties = PropertiesField(possibilities=WORD_PROPERTIES)
 
     def define(self, origin):
         """
@@ -128,6 +113,8 @@ class Inflecter(Pattern):
     """
     Model for <Inflection> pattern
     """
+
+    properties = PropertiesField(possibilities=INFLECTION_PROPERTIES)
 
     def apply(self, origin):
         """

@@ -1,7 +1,3 @@
-TASHKEEL = 'َُِّْ'
-
-TANWEEN = 'ًٌٍ'
-
 ROOT_LENGTHS = (3, 4)
 
 FATHA = 'َ'
@@ -97,3 +93,10 @@ ARABIC_CHARACTERS = ABJAD + DIACRITICS
 ARABIC_LANGUAGE_CODE = 'ar'
 
 ENGLISH_LANGUAGE_CODE = 'en'
+
+INFLECTION_PROPERTIES = {'gender': ['masculine', 'feminine'], 'person': ['first', 'second', 'third'],
+     'count': ['singular', 'dual', 'plural'], 'state': ['construct', 'indefinite', 'definite'],
+     'tense': ['imperfect', 'perfect'], 'mood': ['indicative', 'subjunctive', 'imperative']}
+
+WORD_PROPERTIES = {'gender': ['masculine', 'feminine'],
+                   'form': ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']}
