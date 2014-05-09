@@ -4,6 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^arabic/', include('arabic.urls')),
+    url(r'^dictionary/', include('dictionary.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

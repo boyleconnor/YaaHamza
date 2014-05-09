@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
-from arabic.ajax import root_detail, root_list
-from arabic.views import RootDetail, RootCreate, RootUpdate, RootDelete
+from dictionary.ajax import root_detail, root_list
+from dictionary.views import RootDetail, RootCreate, RootUpdate, RootDelete
 
-urlpatterns = patterns('arabic.views',
+urlpatterns = patterns('dictionary.views',
     url(r'(?P<pk>\d+)/$', RootDetail.as_view(), name='root-detail'),
     url(r'create/$', RootCreate.as_view(), name='root-create'),
     url(r'(?P<pk>\d+)/edit/$', RootUpdate.as_view(), name='root-update'),

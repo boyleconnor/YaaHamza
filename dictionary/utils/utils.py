@@ -1,4 +1,4 @@
-from arabic.utils.constants import TASHKEEL
+from dictionary.utils.constants import TASHKEEL
 
 
 def search_pattern(word):

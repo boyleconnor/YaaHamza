@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, url, include
 from django.contrib import admin
-from arabic.views import *
+from dictionary.views import *
 admin.autodiscover()
 
-urlpatterns = patterns('arabic.views',
-    url(r'^root/', include('arabic.urls.root')),
-    url(r'^word/', include('arabic.urls.word')),
+urlpatterns = patterns('dictionary.views',
+    url(r'^root/', include('dictionary.urls.root')),
+    url(r'^word/', include('dictionary.urls.word')),
     url(r'^search/$', WordSearch.as_view(), name='search'),
     url(r'^$', Home.as_view(), name='home'),
 )

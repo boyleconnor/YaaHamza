@@ -2,9 +2,9 @@ from django.core.urlresolvers import reverse_lazy, reverse
 from django.db.models.base import get_absolute_url
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.views.generic.edit import UpdateView, DeleteView
-from arabic.forms import WordForm, RootForm
-from arabic.models import Word, Root
-from arabic.utils.utils import search_pattern
+from dictionary.forms import WordForm, RootForm, InflectionForm
+from dictionary.models import Word, Root, Inflection
+from dictionary.utils.utils import search_pattern
 
 
 class Home(TemplateView):
@@ -84,3 +84,13 @@ class WordSearch(ListView):
         if 'pos' in self.request.GET:
             results = results.filter(pos=self.request.GET['pos'])
         return results
+
+
+class InflectionDetail(DetailView):
+    model = Inflection
+    template_name = 'inflection/detail.html'
+
+
+class InflectionCreate(CreateView):
+    form_class = InflectionForm
+    template_name = 'inflection/create.html'

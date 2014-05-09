@@ -94,9 +94,16 @@ ARABIC_LANGUAGE_CODE = 'ar'
 
 ENGLISH_LANGUAGE_CODE = 'en'
 
-INFLECTION_PROPERTIES = {'gender': ['masculine', 'feminine'], 'person': ['first', 'second', 'third'],
-     'count': ['singular', 'dual', 'plural'], 'state': ['construct', 'indefinite', 'definite'],
-     'tense': ['imperfect', 'perfect'], 'mood': ['indicative', 'subjunctive', 'imperative']}
+POS_CHOICES = (('noun', 'Noun'), ('verb', 'Verb'), ('adjective', 'Adjective'), ('preposition', 'Preposition'))
 
-WORD_PROPERTIES = {'gender': ['masculine', 'feminine'],
-                   'form': ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']}
+GENDER_CHOICES = (('masculine', 'Masculine'), ('feminine', 'Feminine'))
+
+TENSE_MOOD_CHOICES = (('indicative-perfect', 'Indicative Perfect'), ('indicative-imperfect', 'Indicative Imperfect'))
+
+COUNT_CHOICES = (('singular', 'Singular'), ('dual', 'Dual'), ('plural', 'Plural'))
+
+PERSON_CHOICES = (('first', 'First'), ('second', 'Second'), ('third', 'Third'))
+
+STATE_CHOICES = (('construct', 'Construct'), ('definite', 'Definite'), ('indefinite', 'Indefinite'))
+
+CASE_CHOICES = (('nominative', 'Nominative'), ('genitive', 'Genitive'), ('accusative', 'Accusative'))

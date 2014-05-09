@@ -4,10 +4,7 @@ register = Library()
 
 @register.simple_tag
 def get_inflections(word, **kwargs):
-    lookup = str()
-    for property_, value in kwargs.items():
-        lookup += '(?=.*/%s:%s/)' % (property_, value)
-    results = word.inflections.filter(properties__regex=lookup)
+    results = word.inflections.filter(**kwargs)
     if len(results) == 1:
         return results[0]
     elif len(results) > 1:

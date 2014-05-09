@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
-from arabic.models import Word, Root, Inflection
-from arabic.utils.ajax import ajax_hook
+from dictionary.models import Word, Root, Inflection
+from dictionary.utils.ajax import ajax_hook
 
 
 @ajax_hook
