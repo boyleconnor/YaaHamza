@@ -84,13 +84,3 @@ class WordSearch(ListView):
         if 'pos' in self.request.GET:
             results = results.filter(pos=self.request.GET['pos'])
         return results
-
-
-class InflectionDetail(DetailView):
-    model = Inflection
-    template_name = 'inflection/detail.html'
-
-
-class InflectionCreate(CreateView):
-    form_class = InflectionForm
-    template_name = 'inflection/create.html'
