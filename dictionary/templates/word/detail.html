@@ -5,8 +5,21 @@
 {% block content %}
     <h1>{{ word }}</h1>
     {% include "word/info_table.html" with word=word %}
-    {% if word.pos == "verb" %}<h3>Conjugations</h3> {% include "word/inflection_tables/verb_inflection_table.html" with verb=word tense_mood="indicative-imperfect" %}{% endif %}
-    {% if word.pos == "noun" %}<h3>Declensions</h3>{% include "word/inflection_tables/noun_inflection_table.html" with noun=word state="construct" %}{% endif %}
-    {% if word.pos == "adjective" %}<h3>Declensions</h3>{% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}{% endif %}
+    {% if word.pos == "verb" %}
+        <h3>Conjugations</h3>
+        <br>
+        <h4>Imperfect</h4>
+        {% include "word/inflection_tables/verb_inflection_table.html" with verb=word tense_mood="indicative-imperfect" %}
+        <h4>Perfect</h4>
+        {% include "word/inflection_tables/verb_inflection_table.html" with verb=word tense_mood="indicative-perfect" %}
+    {% endif %}
+    {% if word.pos == "noun" %}
+        <h3>Declensions</h3>
+        {% include "word/inflection_tables/noun_inflection_table.html" with noun=word state="construct" %}
+    {% endif %}
+    {% if word.pos == "adjective" %}
+        <h3>Declensions</h3>
+        {% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}
+    {% endif %}
     <a href="{% url "word-update" pk=word.pk %}">Edit</a>
 {% endblock %}

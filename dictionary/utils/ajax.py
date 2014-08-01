@@ -7,7 +7,7 @@ import json
 from django.http import HttpResponse
 
 
-def ajax_hook(old):
+def jsonify(old):
     def new(*args, **kwargs):
         return HttpResponse(json.dumps(make_jsonable(old(*args, **kwargs))))
     return new
