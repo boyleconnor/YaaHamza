@@ -1,15 +1,10 @@
-from dictionary.utils.constants import POS_CHOICES, GENDER_CHOICES, STATE_CHOICES, COUNT_CHOICES, PERSON_CHOICES, \
+from dictionary.utils.constants import GENDER_CHOICES, STATE_CHOICES, COUNT_CHOICES, PERSON_CHOICES, \
     TENSE_MOOD_CHOICES, CASE_CHOICES
-from django.core.urlresolvers import reverse
-from django.db.models import Model, TextField, ForeignKey, ManyToManyField
+from django.core.urlresolvers import reverse_lazy
+from django.db.models import Model, TextField, ForeignKey, OneToOneField, BooleanField
 
 
 class Root(Model):
-    """
-    Model for word root
-
-    Ex: فعل, كتب, بسمل
-    """
     spelling = TextField()
     definition = TextField()
 
@@ -18,33 +13,37 @@ class Root(Model):
 
 
 class Word(Model):
-    """
-    Model for fully-derived word
-
-    Ex: مَطْبَخ, طَاَبِخ
-    """
     spelling = TextField()
     definition = TextField()
-    #relationships
+    examples = TextField()
     root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
     stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
-    #properties
-    pos = TextField(choices=POS_CHOICES)
     gender = TextField(choices=GENDER_CHOICES, blank=True)
-
-    def get_absolute_url(self):
-        return reverse('word-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.spelling
 
 
-class Inflection(Model):
-    """
-    Model for fully-inflected word
+class Adjective(Word):
+    pass
 
-    Ex: كِتَاَبُ, كُتُبْ
-    """
+
+class Noun(Word):
+    gender = TextField(choices=GENDER_CHOICES)
+    human = BooleanField()
+
+
+class Verb(Word):
+    verbal_noun = OneToOneField('Noun', blank=True, null=True, related_name='verb')
+    active_participle = OneToOneField('Noun', blank=True, null=True, related_name='verb')
+    passive_participle = OneToOneField('Noun', blank=True, null=True, related_name='verb')
+
+
+class Preposition(Word):
+    pass
+
+
+class Inflection(Model):
     spelling = TextField()
     stem = ForeignKey('Word', related_name='inflections')
     #properties
