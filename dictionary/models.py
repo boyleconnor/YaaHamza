@@ -1,7 +1,6 @@
-from dictionary.utils.constants import GENDER_CHOICES, STATE_CHOICES, COUNT_CHOICES, PERSON_CHOICES, \
-    TENSE_MOOD_CHOICES, CASE_CHOICES
-from django.core.urlresolvers import reverse_lazy
 from django.db.models import Model, TextField, ForeignKey, OneToOneField, BooleanField
+
+from arabic_utils.constants import GENDER_CHOICES
 
 
 class Root(Model):
