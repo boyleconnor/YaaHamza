@@ -35,8 +35,8 @@ class Noun(Word):
 
 class Verb(Word):
     verbal_noun = OneToOneField('Noun', blank=True, null=True, related_name='verb')
-    active_participle = OneToOneField('Noun', blank=True, null=True, related_name='verb')
-    passive_participle = OneToOneField('Noun', blank=True, null=True, related_name='verb')
+    active_participle = OneToOneField('Adjective', blank=True, null=True, related_name='verb')
+    passive_participle = OneToOneField('Adjective', blank=True, null=True, related_name='verb')
 
 
 class Preposition(Word):
