@@ -5,6 +5,7 @@
 {% block content %}
     <h1>{{ word }}</h1>
     {% include "word/info_table.html" with word=word %}
+    {% comment %}
     {% if word.pos == "verb" %}
         <h3>Conjugations</h3>
         <br>
@@ -21,5 +22,6 @@
         <h3>Declensions</h3>
         {% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}
     {% endif %}
-    <a href="{% url "word-update" pk=word.pk %}">Edit</a>
+    {% endcomment %}
+    <a href="{% url "dictionary:word.update" pk=word.pk %}">Edit</a>
 {% endblock %}

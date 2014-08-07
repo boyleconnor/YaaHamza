@@ -8,6 +8,8 @@
         <table class="table">{{ form.as_table }}</table>
         <input type="submit" value="Submit">
     </form>
-    <a href="{% url "word-delete" pk=word.pk %}">Delete</a>
-    <a href="{% url "word-detail" pk=word.pk %}">Cancel</a>
+    {% if word %}
+        <a href="{% url "dictionary:word.delete" pk=word.pk spelling=word.spelling %}">Delete</a>
+        <a href="{% url "dictionary:word.detail" pk=word.pk spelling=word.spelling %}">Cancel</a>
+    {% endif %}
 {% endblock %}

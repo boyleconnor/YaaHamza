@@ -98,6 +98,8 @@ POS_CHOICES = (('noun', 'Noun'), ('verb', 'Verb'), ('adjective', 'Adjective'), (
 
 GENDER_CHOICES = (('masculine', 'Masculine'), ('feminine', 'Feminine'))
 
+HUMAN_CHOICES = (('human', 'Human'), ('non-human', 'Non-Human'))
+
 TENSE_MOOD_CHOICES = (('indicative-perfect', 'Indicative Perfect'), ('indicative-imperfect', 'Indicative Imperfect'))
 
 COUNT_CHOICES = (('singular', 'Singular'), ('dual', 'Dual'), ('plural', 'Plural'))

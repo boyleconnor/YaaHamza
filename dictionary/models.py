@@ -1,6 +1,8 @@
-from django.db.models import Model, TextField, ForeignKey, OneToOneField, BooleanField
+from django.core.urlresolvers import reverse_lazy
 
-from arabic_utils.constants import GENDER_CHOICES
+from django.db.models import Model, ForeignKey, CharField, TextField, NullBooleanField
+
+from arabic_utils.constants import GENDER_CHOICES, POS_CHOICES, HUMAN_CHOICES
 
 
 class Root(Model):
@@ -12,31 +14,19 @@ class Root(Model):
 
 
 class Word(Model):
-    spelling = TextField()
+    pos = CharField(choices=POS_CHOICES, max_length=15)
+    spelling = CharField(max_length=255)
     definition = TextField()
-    examples = TextField()
+    examples = TextField(blank=True)
     root = ForeignKey('Root', blank=True, null=True, related_name='derivatives')
     stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
-    gender = TextField(choices=GENDER_CHOICES, blank=True)
+    '''
+    gender = CharField(choices=GENDER_CHOICES, blank=True, max_length=15)
+    human = CharField(choices=HUMAN_CHOICES, null=True, max_length=15)
+    '''
+
+    def get_absolute_url(self):
+        return reverse_lazy('dictionary:word.detail', kwargs={'pk': self.pk, 'spelling': self.spelling})
 
     def __str__(self):
         return self.spelling
-
-
-class Adjective(Word):
-    pass
-
-
-class Noun(Word):
-    gender = TextField(choices=GENDER_CHOICES)
-    human = BooleanField()
-
-
-class Verb(Word):
-    verbal_noun = OneToOneField('Noun', blank=True, null=True, related_name='verb')
-    active_participle = OneToOneField('Adjective', blank=True, null=True, related_name='verb')
-    passive_participle = OneToOneField('Adjective', blank=True, null=True, related_name='verb')
-
-
-class Preposition(Word):
-    pass
