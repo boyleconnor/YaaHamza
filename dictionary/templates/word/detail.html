@@ -23,5 +23,5 @@
         {% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}
     {% endif %}
     {% endcomment %}
-    <a href="{% url "dictionary:word.update" pk=word.pk %}">Edit</a>
+    <a href="{% url "dictionary:word.update" pk=word.pk spelling=word.spelling %}">Edit</a>
 {% endblock %}

@@ -25,14 +25,6 @@
     <div class="header row text-left">
         <div class="span4" style="float:left; margin-right: 30px;"> <h1> <a href="{% url 'home' %}" ><img alt="YaaHamza" src="/static/images/logo-small.png" /> </a> </h1></div>
     </div>
-    <form action="/">
-        <input type="text" name="query">
-        <input type="submit" value="Search">
-        <select name="language">
-            <option value="en">English</option>
-            <option value="ar">العربية</option>
-        </select>
-    </form>
     {% block content %}{% endblock %}
     <hr>
     <div class="row footer text-center">

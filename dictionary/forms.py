@@ -1,5 +1,11 @@
 from django.forms import ModelForm
-from dictionary.models import Word
+from dictionary.models import Word, Root
+
+
+class RootForm(ModelForm):
+    class Meta:
+        model = Root
+        fields = '__all__'
 
 
 class WordForm(ModelForm):

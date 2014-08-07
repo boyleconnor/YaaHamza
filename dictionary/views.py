@@ -1,7 +1,17 @@
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from dictionary.forms import WordForm
-from dictionary.models import Word
+from dictionary.models import Word, Root
+
+
+class Search(ListView):
+    def get_queryset(self):
+        return []
+
+
+class RootDetail(DetailView):
+    model = Root
+    template_name = 'root/detail.html'
 
 
 class WordDetail(DetailView):
