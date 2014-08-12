@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>{% trans 'Word' %}</th>
+            <th>{% trans 'Part of Speech' %}</th>
+            <th>{% trans 'Definition' %}</th>
+        </tr>
+        {% for word in results %}
+            <tr>
+                <td><a href="{{ word.get_detail_url }}">{{ word }}</a></td>
+                <td>{{ word.get_pos_display }}</td>
+                <td>{{ word.definition }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,4 +1,4 @@
-from arabic_utils.constants import TASHKEEL
+from arabic_tools.constants import TASHKEEL
 
 
 def search_pattern(word):
@@ -15,4 +15,4 @@ def spelling_to_template(word, root=('ف', 'ع', 'ل')):
         raise ValueError()
     for i, j in enumerate(root):
         word.replace(j, ('\\%s' % i))
-
+    return word

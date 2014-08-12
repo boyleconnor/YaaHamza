@@ -1,15 +1,25 @@
 from django.test import TestCase
-from dictionary.models import *
+from arabic_tools.utils import spelling_to_template
+from dictionary.models import Word, Deriver
 
 
 class ArabicTests(TestCase):
     def setUp(self):
-        Root.objects.create(spelling='فعل', definition='do; make')
-        Root.objects.create(spelling='كتب', definition='write')
+        Word.objects.create(spelling='فعل', definition='doing; making', pos='root')
+        Word.objects.create(spelling='طَاَلِب', definition='student', pos='noun')
+        Deriver.objects.create(origin_pos='root', result_pos='verb', template=spelling_to_template('فَعَلَ'))
 
     def test_roots(self):
-        for i in Root.objects.all():
+        for i in Word.objects.filter(pos='root'):
             print(i)
-            print(i.properties)
-            print(type(i.properties))
             print(i.definition)
+
+    def test_nouns(self):
+        for i in Word.objects.filter(pos='noun'):
+            print(i)
+            print(i.definition)
+
+    def test_derivation(self):
+        fa3ala = Deriver.objects.get(id=1).apply(Word.objects.get(id=1, pos='root', spelling='فعل'))
+        print(fa3ala)
+        self.assertEqual(fa3ala.spelling, 'فَعَلَ')
