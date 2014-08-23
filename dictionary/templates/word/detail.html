@@ -1,26 +1,14 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %}{{ word }}{% endblock %}
 
 {% block content %}
     <h1>{{ word }}</h1>
     {% include "word/info_table.html" with word=word %}
-    {% comment %}
-    {% if word.pos == "verb" %}
-        <h3>Conjugations</h3>
-        <br>
-        <h4>Imperfect</h4>
-        {% include "word/inflection_tables/verb_inflection_table.html" with verb=word tense_mood="indicative-imperfect" %}
-        <h4>Perfect</h4>
-        {% include "word/inflection_tables/verb_inflection_table.html" with verb=word tense_mood="indicative-perfect" %}
+    {% if word.derivatives.count > 0 %}
+        <h3>{% trans 'Derivatives' %}</h3>
+        {% include "word/word_list_table.html" with words=word.derivatives.all %}
     {% endif %}
-    {% if word.pos == "noun" %}
-        <h3>Declensions</h3>
-        {% include "word/inflection_tables/noun_inflection_table.html" with noun=word state="construct" %}
-    {% endif %}
-    {% if word.pos == "adjective" %}
-        <h3>Declensions</h3>
-        {% include "word/inflection_tables/adjective_inflection_table.html" with adjective=word state="construct" %}
-    {% endif %}
-    {% endcomment %}
 {% endblock %}

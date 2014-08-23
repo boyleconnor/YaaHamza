@@ -1,58 +1,35 @@
+{% load i18n %}
+
 <table class="table">
     <tr>
-        <td>
-            Part of Speech
-        </td>
-        <td>
-            {{ word.pos|capfirst }}
-        </td>
+        <td>Part of Speech</td>
+        <td>{{ word.get_pos_display }}</td>
     </tr>
     <tr>
-        <td>
-            Definition
-        </td>
-        <td>
-            {{ word.definition|capfirst }}
-        </td>
+        <td>Definition</td>
+        <td>{{ word.definition|capfirst }}</td>
+    </tr>
+    <tr>
+        <td>Examples</td>
+        <td>{{ word.examples|default:"<i>None available</i>" }}</td>
+        {# FIXME: The above needs to be translatable and hopefully the formatting should be pushed outside. #}
     </tr>
     {% if word.deriver %}
-    <tr>
-        <td>
-            Pattern
-        </td>
-        <td>
-            {{ word.deriver }}
-        </td>
-    </tr>
+        <tr>
+            <td>Pattern</td>
+            <td>{{ word.deriver }}</td>
+        </tr>
     {% endif %}
-    {% if word.stem %}
-    <tr>
-        <td>
-            Stem
-        </td>
-        <td>
-            {{ word.stem }}
-        </td>
-    </tr>
+    {% if word.stem and word.stem != word.get_root %}
+        <tr>
+            <td>Stem</td>
+            <td>{{ word.stem }}</td>
+        </tr>
     {% endif %}
-    {% if word.root %}
-    <tr>
-        <td>
-            Root
-        </td>
-        <td>
-            <a href="{% url "root-detail" word.root.pk %}">{{ word.root }}</a>
-        </td>
-    </tr>
+    {% if word.get_root %}
+        <tr>
+            <td>Root</td>
+            <td><a href="{{ word.get_root.get_detail_url }}">{{ word.get_root }}</a></td>
+        </tr>
     {% endif %}
-    {% for key, value in word.properties.items %}
-    <tr>
-        <td>
-            {{ key|capfirst }}
-        </td>
-        <td>
-            {{ value|capfirst }}
-        </td>
-    </tr>
-    {% endfor %}
 </table>

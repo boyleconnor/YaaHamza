@@ -11,11 +11,12 @@ class Word(Model):
     definition = TextField()
     examples = TextField(blank=True)
     stem = ForeignKey('Word', blank=True, null=True, related_name='derivatives')
+    pattern = ForeignKey('Deriver', blank=True, null=True, related_name='words')
 
     def get_root(self):
-        stem = self.get_stem()
+        stem = self.stem
         if stem is None:
-            raise Exception()
+            return None
         elif stem.pos == 'root':
             return stem
         else:
@@ -23,13 +24,13 @@ class Word(Model):
 
     def get_detail_url(self):
         return reverse_lazy('dictionary:word.detail', kwargs={'pk': self.pk, 'spelling': self.spelling})
-
+    '''
     def get_update_url(self):
         return reverse_lazy('dictionary:word.update', kwargs={'pk': self.pk, 'spelling': self.spelling})
 
     def get_delete_url(self):
         return reverse_lazy('dictionary:word.delete', kwargs={'pk': self.pk, 'spelling': self.spelling})
-
+    '''
     def get_absolute_url(self):
         return self.get_detail_url()
 
@@ -54,4 +55,7 @@ class Deriver(Model):
         return re.match(self.expectation, spelling_in).expand(self.template)
 
     def apply(self, stem):
-        return Word(spelling=self.apply_spelling(stem), pos=self.result_pos)
+        return Word(spelling=self.apply_spelling(stem), pos=self.result_pos, stem=stem, pattern=self)
+
+    def __str__(self):
+        return self.name

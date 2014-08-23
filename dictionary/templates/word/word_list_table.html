@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<table class="table">
+    <tr>
+        <th>{% trans "Word" %}</th>
+        <th>{% trans "Part of Speech" %}</th>
+        <th>{% trans "Definition" %}</th>
+    </tr>
+    {% for word in words %}
+        <tr>
+            <td><a href="{{ word.get_detail_url }}">{{ word.spelling }}</a></td>
+            <td>{{ word.get_pos_display }}</td>
+            <td>{{ word.definition|capfirst }}</td>
+        </tr>
+    {% endfor %}
+</table>
